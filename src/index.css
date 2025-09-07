@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+:root {
+  /* Updated color tokens to match the specified dark navy portfolio theme */
+  --background: #0f172a; /* Very dark navy background */
+  --foreground: #f8fafc; /* Off-white primary text */
+  --card: #1e293b; /* Dark slate gray for cards/sidebar */
+  --card-foreground: #f8fafc; /* Off-white text on cards */
+  --popover: #1e293b; /* Dark popover background */
+  --popover-foreground: #f8fafc; /* Light text in popovers */
+  --primary: #38bdf8; /* Sky blue accent color */
+  --primary-foreground: #0f172a; /* Dark text on primary buttons */
+  --secondary: #94a3b8; /* Cool gray for secondary text */
+  --secondary-foreground: #f8fafc; /* Light text on secondary elements */
+  --muted: #94a3b8; /* Cool gray for muted text */
+  --muted-foreground: #f8fafc; /* Light muted text */
+  --accent: #a78bfa; /* Soft purple secondary accent */
+  --accent-foreground: #0f172a; /* Dark text on accent elements */
+  --destructive: #ef4444; /* Clean red for danger */
+  --destructive-foreground: #f8fafc; /* Light text on destructive elements */
+  --border: #334155; /* Subtle border color */
+  --input: #1e293b; /* Input field background */
+  --ring: #38bdf8; /* Sky blue focus ring */
+  --chart-1: #38bdf8; /* Sky blue for charts */
+  --chart-2: #a78bfa; /* Purple for charts */
+  --chart-3: #22c55e; /* Success green for charts */
+  --chart-4: #facc15; /* Warning amber for charts */
+  --chart-5: #ef4444; /* Danger red for charts */
+  --radius: 0.625rem;
+  --sidebar: #1e293b; /* Dark slate sidebar background */
+  --sidebar-foreground: #f8fafc; /* Light sidebar text */
+  --sidebar-primary: #38bdf8; /* Sky blue sidebar accent */
+  --sidebar-primary-foreground: #0f172a; /* Dark text on sidebar primary */
+  --sidebar-accent: #334155; /* Subtle sidebar accent */
+  --sidebar-accent-foreground: #f8fafc; /* Light text on sidebar accent */
+  --sidebar-border: #334155; /* Sidebar border color */
+  --sidebar-ring: #38bdf8; /* Sky blue sidebar focus ring */
+}
+
+.dark {
+  /* Dark mode uses the same colors since this is already a dark theme */
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --popover: #1e293b;
+  --popover-foreground: #f8fafc;
+  --primary: #38bdf8;
+  --primary-foreground: #0f172a;
+  --secondary: #94a3b8;
+  --secondary-foreground: #f8fafc;
+  --muted: #94a3b8;
+  --muted-foreground: #f8fafc;
+  --accent: #a78bfa;
+  --accent-foreground: #0f172a;
+  --destructive: #ef4444;
+  --destructive-foreground: #f8fafc;
+  --border: #334155;
+  --input: #1e293b;
+  --ring: #38bdf8;
+  --chart-1: #38bdf8;
+  --chart-2: #a78bfa;
+  --chart-3: #22c55e;
+  --chart-4: #facc15;
+  --chart-5: #ef4444;
+  --sidebar: #1e293b;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #38bdf8;
+  --sidebar-primary-foreground: #0f172a;
+  --sidebar-accent: #334155;
+  --sidebar-accent-foreground: #f8fafc;
+  --sidebar-border: #334155;
+  --sidebar-ring: #38bdf8;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
