@@ -82,7 +82,7 @@ export default function Sidebar({ isOpen, onClose }) {
         <div className="flex flex-col items-center p-6 shadow-sm">
           {/* Profile Image */}
           <motion.img
-            src={import.meta.env.VITE_APP_FILE_URL + admin?.data?.profilePicture} // yaha apna profilePicture URL lagana
+            src={admin?.data?.profilePicture} // yaha apna profilePicture URL lagana
             alt="Profile"
             className="w-20 h-20 rounded-full border-2 border-accent object-cover"
             initial={{ opacity: 0, scale: 0.8 }}
