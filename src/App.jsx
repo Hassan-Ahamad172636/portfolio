@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Portfolio from "./public/portfolio";
-import AdminLayout from "./private/layout/adminLayout";
+import AdminLayout from "./private/layout/AdminLayout";
 import LoginPage from "./private/Login";
 import SignupPage from "./private/Signup";
 import UsersPage from "./private/User";
