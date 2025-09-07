@@ -195,7 +195,7 @@ const QAPage = () => {
       formData.append("toolsUsed", addFormData.toolsUsed);
       formData.append("description", addFormData.description);
       if (addFormData.reportFile) {
-        formData.append("reportFile", addFormData.reportFile);
+        formData.append("reportFile", { file: addFormData.reportFile });
       } else {
         formData.append("reportLink", addFormData.reportLink);
       }
@@ -345,12 +345,12 @@ const QAPage = () => {
     };
     const config = statusConfig[status] || statusConfig.pending;
     const Icon = config.icon;
-    return (
-      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs border ${config.color}`}>
-        <Icon className="w-3 h-3" />
-        {status?.charAt(0)?.toUpperCase() + status?.slice(1)}
-      </span>
-    );
+    // return (
+    //   <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs border ${config.color}`}>
+    //     <Icon className="w-3 h-3" />
+    //     {status?.charAt(0)?.toUpperCase() + status?.slice(1)}
+    //   </span>
+    // );
   };
 
   const getTypeBadge = (type) => {
@@ -423,27 +423,27 @@ const QAPage = () => {
             color: "sky",
             change: `+${qaRecords.filter((qa) => new Date(qa.createdAt).getFullYear() === new Date().getFullYear()).length} this year`,
           },
-          {
-            title: "Passed Tests",
-            value: qaRecords.filter((qa) => qa.status === "passed").length,
-            icon: CheckCircle,
-            color: "green",
-            change: `+${qaRecords.filter((qa) => qa.status === "passed" && new Date(qa.createdAt).getFullYear() === new Date().getFullYear()).length} this year`,
-          },
-          {
-            title: "Failed Tests",
-            value: qaRecords.filter((qa) => qa.status === "failed").length,
-            icon: XCircle,
-            color: "red",
-            change: `${qaRecords.filter((qa) => qa.status === "failed" && new Date(qa.createdAt).getFullYear() === new Date().getFullYear()).length} this year`,
-          },
-          {
-            title: "Pending Tests",
-            value: qaRecords.filter((qa) => qa.status === "pending").length,
-            icon: Clock,
-            color: "yellow",
-            change: `+${qaRecords.filter((qa) => qa.status === "pending" && new Date(qa.createdAt).getFullYear() === new Date().getFullYear()).length} this year`,
-          },
+          // {
+          //   title: "Passed Tests",
+          //   value: qaRecords.filter((qa) => qa.status === "passed").length,
+          //   icon: CheckCircle,
+          //   color: "green",
+          //   change: `+${qaRecords.filter((qa) => qa.status === "passed" && new Date(qa.createdAt).getFullYear() === new Date().getFullYear()).length} this year`,
+          // },
+          // {
+          //   title: "Failed Tests",
+          //   value: qaRecords.filter((qa) => qa.status === "failed").length,
+          //   icon: XCircle,
+          //   color: "red",
+          //   change: `${qaRecords.filter((qa) => qa.status === "failed" && new Date(qa.createdAt).getFullYear() === new Date().getFullYear()).length} this year`,
+          // },
+          // {
+          //   title: "Pending Tests",
+          //   value: qaRecords.filter((qa) => qa.status === "pending").length,
+          //   icon: Clock,
+          //   color: "yellow",
+          //   change: `+${qaRecords.filter((qa) => qa.status === "pending" && new Date(qa.createdAt).getFullYear() === new Date().getFullYear()).length} this year`,
+          // },
         ].map((stat, index) => (
           <motion.div
             key={stat.title}
@@ -491,7 +491,7 @@ const QAPage = () => {
             <option value="manual" className="bg-slate-800">Manual</option>
             <option value="automation" className="bg-slate-800">Automation</option>
           </select>
-          <select
+          {/* <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="cursor-pointer px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
@@ -500,7 +500,7 @@ const QAPage = () => {
             <option value="passed" className="bg-slate-800">Passed</option>
             <option value="failed" className="bg-slate-800">Failed</option>
             <option value="pending" className="bg-slate-800">Pending</option>
-          </select>
+          </select> */}
           {selectedItems.length > 0 && (
             <div className="flex gap-2">
               <motion.button
@@ -565,7 +565,7 @@ const QAPage = () => {
                   <th className="p-3 text-left text-sm font-medium text-slate-300 uppercase">Type</th>
                   <th className="p-3 text-left text-sm font-medium text-slate-300 uppercase">Tools Used</th>
                   {/* <th className="p-3 text-left text-sm font-medium text-slate-300 uppercase">Status</th> */}
-                  <th className="p-3 text-left text-sm font-medium text-slate-300 uppercase">Last Run</th>
+                  {/* <th className="p-3 text-left text-sm font-medium text-slate-300 uppercase">Last Run</th> */}
                   <th className="p-3 text-left text-sm font-medium text-slate-300 uppercase">Actions</th>
                 </tr>
               </thead>
@@ -610,9 +610,9 @@ const QAPage = () => {
                         </div>
                       </td>
                       {/* <td className="p-3">{getStatusBadge(qa.status)}</td> */}
-                      <td className="p-3 text-slate-300 text-xs">
+                      {/* <td className="p-3 text-slate-300 text-xs">
                         {new Date(qa.lastRun || qa.createdAt).toLocaleDateString()}
-                      </td>
+                      </td> */}
                       <td className="p-3">
                         <div className="flex gap-2">
                           <motion.button
@@ -732,7 +732,7 @@ const QAPage = () => {
                   </div>
                   <div className="mt-2 flex gap-2">
                     <span>{getTypeBadge(qa.type)}</span>
-                    <span>{getStatusBadge(qa.status)}</span>
+                    {/* <span>{getStatusBadge(qa.status)}</span> */}
                   </div>
                   <div className="mt-2 text-slate-300 text-xs">
                     Last Run: {new Date(qa.lastRun || qa.createdAt).toLocaleDateString()}
@@ -834,7 +834,7 @@ const QAPage = () => {
                     aria-required="true"
                   />
                 </div>
-                <div>
+                {/* <div>
                   <label className="block text-xs font-medium text-slate-100 mb-1">Report File</label>
                   <input
                     type="file"
@@ -844,7 +844,7 @@ const QAPage = () => {
                     className="w-full px-2 py-2 bg-slate-700/50 border border-slate-600 rounded-lg text-slate-100 text-sm file:bg-sky-500/20 file:text-sky-400 file:border-none file:px-3 file:py-2 file:rounded file:text-sm"
                     accept=".pdf,.doc,.docx,.txt"
                   />
-                </div>
+                </div> */}
                 <div>
                   <label className="block text-xs font-medium text-slate-100 mb-1">Report Link (if no file)</label>
                   <input
@@ -960,7 +960,7 @@ const QAPage = () => {
                     aria-required="true"
                   />
                 </div>
-                <div>
+                {/* <div>
                   <label className="block text-xs font-medium text-slate-100 mb-1">Report File</label>
                   <input
                     type="file"
@@ -970,7 +970,7 @@ const QAPage = () => {
                     className="w-full px-2 py-2 bg-slate-700/50 border border-slate-600 rounded-lg text-slate-100 text-sm file:bg-sky-500/20 file:text-sky-400 file:border-none file:px-3 file:py-2 file:rounded file:text-sm"
                     accept=".pdf,.doc,.docx,.txt"
                   />
-                </div>
+                </div> */}
                 <div>
                   <label className="block text-xs font-medium text-slate-100 mb-1">Report Link (if no file)</label>
                   <input
@@ -1044,10 +1044,10 @@ const QAPage = () => {
                   <p className="text-slate-400 text-xs">Type</p>
                   <p className="text-slate-100 text-sm">{getTypeBadge(showViewModal.type)}</p>
                 </div>
-                <div>
+                {/* <div>
                   <p className="text-slate-400 text-xs">Status</p>
                   <p className="text-slate-100 text-sm">{getStatusBadge(showViewModal.status)}</p>
-                </div>
+                </div> */}
                 <div>
                   <p className="text-slate-400 text-xs">Description</p>
                   <p className="text-slate-100 text-sm">{showViewModal.description}</p>
@@ -1062,12 +1062,12 @@ const QAPage = () => {
                     ))}
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <p className="text-slate-400 text-xs">Last Run</p>
                   <p className="text-slate-100 text-sm">
                     {new Date(showViewModal.lastRun || showViewModal.createdAt).toLocaleDateString()}
                   </p>
-                </div>
+                </div> */}
                 {showViewModal.reportLink && (
                   <div>
                     <p className="text-slate-400 text-xs">Report</p>

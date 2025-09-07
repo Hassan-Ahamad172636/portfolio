@@ -60,7 +60,7 @@ export default function Topbar({ onMenuClick }) {
     const updatedReadNotifications = { ...readNotifications, [id]: true }
     setReadNotifications(updatedReadNotifications)
     localStorage.setItem("readNotifications", JSON.stringify(updatedReadNotifications))
-    
+
     // Update notifications state
     setNotifications(prev =>
       prev.map(n => (n._id === id ? { ...n, read: true } : n))
@@ -99,6 +99,9 @@ export default function Topbar({ onMenuClick }) {
           >
             <Menu size={20} />
           </button>
+          <span className="text-3xl text-primary font-bold">
+            Portfolio
+          </span>
         </div>
 
         {/* Right Section */}
@@ -221,7 +224,7 @@ export default function Topbar({ onMenuClick }) {
                   </div>
                   <div className="py-2">
                     {[
-                      { icon: Settings, link: "/settings", label: "Settings", action: () => {} },
+                      { icon: Settings, link: "/admin/settings", label: "Settings", action: () => { } },
                       { icon: LogOut, link: "/", label: "Logout", action: () => { localStorage.removeItem('token') } },
                     ].map((item, index) => (
                       <motion.div
