@@ -93,7 +93,6 @@ const UsersPage = () => {
           id: user._id,
         }));
         setUsers(standardizedUsers);
-        console.log("Fetched Users:", standardizedUsers);
       } catch (err) {
         setError(err.message || "Failed to fetch users");
       } finally {
@@ -110,12 +109,10 @@ const UsersPage = () => {
   );
 
   const handleSelectUser = (userId) => {
-    console.log("Selecting User ID:", userId);
     setSelectedUsers((prev) => {
       const newSelected = prev.includes(userId)
         ? prev.filter((id) => id !== userId)
         : [...prev, userId];
-      console.log("Updated Selected Users:", newSelected);
       return newSelected;
     });
   };
@@ -126,7 +123,6 @@ const UsersPage = () => {
     } else {
       const newSelected = filteredUsers.map((user) => user.id);
       setSelectedUsers(newSelected);
-      console.log("Selected All Users:", newSelected);
     }
   };
 

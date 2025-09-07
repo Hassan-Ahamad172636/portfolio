@@ -60,7 +60,6 @@ export default function Sidebar({ isOpen, onClose }) {
       });
 
       setAdmin(res.data); // state update async hoti hai
-      console.log("API response:", res.data); // yaha sahi value milegi
     } catch (error) {
       console.error("Error fetching profile:", error.response?.data || error.message);
     }
@@ -83,7 +82,7 @@ export default function Sidebar({ isOpen, onClose }) {
         <div className="flex flex-col items-center p-6 shadow-sm">
           {/* Profile Image */}
           <motion.img
-            src={admin?.data?.profilePicture} // yaha apna profilePicture URL lagana
+            src={import.meta.env.VITE_APP_FILE_URL + admin?.data?.profilePicture} // yaha apna profilePicture URL lagana
             alt="Profile"
             className="w-20 h-20 rounded-full border-2 border-accent object-cover"
             initial={{ opacity: 0, scale: 0.8 }}

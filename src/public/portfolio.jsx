@@ -147,6 +147,13 @@ export default function Portfolio() {
     })
   }
 
+  const levelMap = {
+    beginner: 30,
+    intermediate: 60,
+    expert: 90,
+  };
+
+
   const openProjectDialog = (project) => {
     setSelectedProject(project)
   }
@@ -316,18 +323,22 @@ export default function Portfolio() {
                     >
                       <IconComponent className="w-12 h-12 text-sky-500 mx-auto mb-4" />
                       <h3 className="text-lg font-semibold mb-3">{skill.name}</h3>
+                      {/* {console.log(levelMap)} */}
                       <div className="w-full bg-slate-600 rounded-full h-2 mb-2">
                         <motion.div
                           className="bg-sky-500 h-2 rounded-full"
                           initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
+                          whileInView={{ width: `${levelMap[skill.level] || 0}%` }} // <-- mapping applied
                           transition={{ duration: 1, delay: index * 0.1 }}
                           viewport={{ once: true }}
                         />
                       </div>
-                      <span className="text-sm text-slate-400">{skill.level}%</span>
+                      <span className="text-sm text-slate-400">
+                        {levelMap[skill.level] || 0}% ({skill.level})
+                      </span>
                     </motion.div>
-                  )
+                  );
+
                 })}
               </div>
             )}
