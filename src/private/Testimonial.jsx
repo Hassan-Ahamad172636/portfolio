@@ -582,8 +582,8 @@ const TestimonialsPage = () => {
                       <td className="p-3">
                         <div className="flex items-center gap-3">
                           <img
-                            src={import.meta.env.VITE_APP_FILE_URL + testimonial.image || "/placeholder.svg"}
-                            alt={import.meta.env.VITE_APP_FILE_URL + testimonial.name}
+                            src={testimonial.image || "/placeholder.svg"}
+                            alt={testimonial.name}
                             className="w-8 h-8 rounded-full object-cover border border-slate-600"
                           />
                           <div>
@@ -675,7 +675,7 @@ const TestimonialsPage = () => {
                       />
                       <div className="flex items-center gap-2">
                         <img
-                          src={import.meta.env.VITE_APP_FILE_URL + testimonial.image || "/placeholder.svg"}
+                          src={testimonial.image || "/placeholder.svg"}
                           alt={testimonial.name}
                           className="w-8 h-8 rounded-full object-cover border border-slate-600"
                         />
@@ -1023,7 +1023,7 @@ const TestimonialsPage = () => {
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <img
-                    src={import.meta.env.VITE_APP_FILE_URL + showViewModal.image || "/placeholder.svg"}
+                    src={showViewModal.image || "/placeholder.svg"}
                     alt={showViewModal.name}
                     className="w-10 h-10 rounded-full object-cover border border-slate-600"
                   />

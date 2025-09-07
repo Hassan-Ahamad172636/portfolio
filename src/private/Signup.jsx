@@ -39,7 +39,7 @@ export default function SignupPage() {
         formDataToSend.append("profilePicture", formData.profilePicture)
       }
 
-      const response = await axios.post("http://localhost:5000/user/register", formDataToSend, {
+      const response = await axios.post(import.meta.env.VITE_APP_BASE_URL + "user/register", formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

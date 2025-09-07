@@ -384,14 +384,14 @@ const ProjectsPage = () => {
       status: project.status,
       images: [],
     });
-    setPreviewImages(project.images.map((img) => `${import.meta.env.VITE_APP_FILE_URL}${img}`));
+    setPreviewImages(project.images.map((img) => `${img}`));
     setShowEditModal(project._id);
   };
 
   // Open View Modal
   const openViewModal = (project) => {
     setShowViewModal(project);
-    setPreviewImages(project.images.map((img) => `${import.meta.env.VITE_APP_FILE_URL}${img}`));
+    setPreviewImages(project.images.map((img) => `${img}`));
   };
 
   // Open Delete Modal
@@ -1245,7 +1245,7 @@ const ProjectsPage = () => {
                       {showViewModal.images.map((img, i) => (
                         <img
                           key={i}
-                          src={`${import.meta.env.VITE_APP_FILE_URL}${img}`}
+                          src={`${img}`}
                           alt={`Project image ${i}`}
                           className="w-16 h-16 rounded-md object-cover"
                         />

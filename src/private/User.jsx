@@ -324,14 +324,14 @@ const UsersPage = () => {
       email: user.email,
       profilePicture: null,
     });
-    setPreviewImage(user.profilePicture ? `${import.meta.env.VITE_APP_FILE_URL}${user.profilePicture}` : null);
+    setPreviewImage(user.profilePicture ? `${user.profilePicture}` : null);
     setShowEditModal(user.id);
   };
 
   // Open View Modal
   const openViewModal = (user) => {
     setShowViewModal({ ...user, id: user.id });
-    setPreviewImage(user.profilePicture ? `${import.meta.env.VITE_APP_FILE_URL}${user.profilePicture}` : null);
+    setPreviewImage(user.profilePicture ? `${user.profilePicture}` : null);
   };
 
   // Open Delete Modal
@@ -501,7 +501,7 @@ const UsersPage = () => {
                         <div className="flex items-center gap-3">
                           {user.profilePicture ? (
                             <img
-                              src={`${import.meta.env.VITE_APP_FILE_URL}${user.profilePicture}`}
+                              src={`${user.profilePicture}`}
                               alt={user.name}
                               className="w-8 h-8 rounded-full object-cover"
                             />
@@ -592,7 +592,7 @@ const UsersPage = () => {
                       />
                       {user.profilePicture ? (
                         <img
-                          src={`${import.meta.env.VITE_APP_FILE_URL}${user.profilePicture}`}
+                          src={`${user.profilePicture}`}
                           alt={user.name}
                           className="w-8 h-8 rounded-full object-cover"
                         />
@@ -936,7 +936,7 @@ const UsersPage = () => {
                 <div className="flex items-center gap-3">
                   {showViewModal.profilePicture ? (
                     <img
-                      src={`${import.meta.env.VITE_APP_FILE_URL}${showViewModal.profilePicture}`}
+                      src={`${showViewModal.profilePicture}`}
                       alt={showViewModal.name}
                       className="w-12 h-12 rounded-full object-cover"
                     />

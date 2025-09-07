@@ -372,7 +372,7 @@ export default function Portfolio() {
                         <AnimatePresence>
                           <motion.img
                             key={`${project._id}-${currentIdx}`}
-                            src={`${import.meta.env.VITE_APP_FILE_URL}${images[currentIdx]}`}
+                            src={`${images[currentIdx]}`}
                             alt={`${project.title} image ${currentIdx + 1}`}
                             className="w-full h-full object-cover"
                             initial={{ opacity: 0, x: 100 }}
@@ -645,7 +645,7 @@ export default function Portfolio() {
                 <AnimatePresence>
                   <motion.img
                     key={`${selectedProject._id}-${currentImageIndex[selectedProject._id]}`}
-                    src={`${import.meta.env.VITE_APP_FILE_URL}${selectedProject.images && selectedProject.images.length > 0 ? selectedProject.images[currentImageIndex[selectedProject._id] || 0] : "/placeholder.svg"}`}
+                    src={`${selectedProject.images && selectedProject.images.length > 0 ? selectedProject.images[currentImageIndex[selectedProject._id] || 0] : "/placeholder.svg"}`}
                     alt={`${selectedProject.title} image ${currentImageIndex[selectedProject._id] + 1}`}
                     className="w-full h-full object-cover rounded-lg"
                     initial={{ opacity: 0, x: 100 }}

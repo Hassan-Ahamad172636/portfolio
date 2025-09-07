@@ -298,14 +298,14 @@ const SkillsPage = () => {
       category: skill.category,
       icon: null,
     });
-    setPreviewIcon(skill.icon ? `${import.meta.env.VITE_APP_FILE_URL}${skill.icon}` : null);
+    setPreviewIcon(skill.icon ? `${skill.icon}` : null);
     setShowEditModal(skill._id);
   };
 
   // Open View Modal
   const openViewModal = (skill) => {
     setShowViewModal(skill);
-    setPreviewIcon(skill.icon ? `${import.meta.env.VITE_APP_FILE_URL}${skill.icon}` : null);
+    setPreviewIcon(skill.icon ? `${skill.icon}` : null);
   };
 
   // Open Delete Modal
@@ -555,7 +555,7 @@ const SkillsPage = () => {
                         <div className="flex items-center gap-3">
                           {skill.icon ? (
                             <img
-                              src={`${import.meta.env.VITE_APP_FILE_URL}${skill.icon}`}
+                              src={`${skill.icon}`}
                               alt={skill.name}
                               className="w-6 h-6 rounded-full object-cover"
                             />
@@ -648,7 +648,7 @@ const SkillsPage = () => {
                         <div className="flex items-center gap-2">
                           {skill.icon ? (
                             <img
-                              src={`${import.meta.env.VITE_APP_FILE_URL}${skill.icon}`}
+                              src={`${skill.icon}`}
                               alt={skill.name}
                               className="w-5 h-5 rounded-full object-cover"
                             />
@@ -1013,7 +1013,7 @@ const SkillsPage = () => {
                   <div>
                     <p className="text-slate-400 text-xs">Icon</p>
                     <img
-                      src={`${import.meta.env.VITE_APP_FILE_URL}${showViewModal.icon}`}
+                      src={`${showViewModal.icon}`}
                       alt="Skill icon"
                       className="w-12 h-12 rounded-md object-cover"
                     />

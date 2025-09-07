@@ -299,7 +299,7 @@ const SettingsPage = () => {
                 className="w-24 h-24 rounded-full border-2 border-transparent bg-gradient-to-r from-sky-500 to-purple-500 p-0.5"
               >
                 <img
-                  src={profileImage ? `${import.meta.env.VITE_APP_FILE_URL}${profileImage}` : "/professional-avatar.jpg"}
+                  src={profileImage ? `${profileImage}` : "/professional-avatar.jpg"}
                   alt="Profile"
                   className="w-full h-full rounded-full object-cover"
                 />
