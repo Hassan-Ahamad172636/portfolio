@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, Camera, Save, Mail, Lock, Shield, Check, Eye, EyeOff, Trash2, Loader2, X, Settings2, Settings } from "lucide-react";
+import { User, Camera, Save, Mail, Lock, Shield, Check, Eye, EyeOff, Trash2, Loader2, X, Settings2 } from "lucide-react";
 import axios from "axios";
 import { useToast } from "ai-toast";
 
@@ -21,6 +21,7 @@ const SettingsPage = () => {
     role: "",
     createdAt: "",
     lastLogin: "",
+    profilePicture: "/professional-avatar.jpg",
   });
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
@@ -46,29 +47,32 @@ const SettingsPage = () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
-          showToast("No authentication token found");
+          showToast("Authentication token is missing");
           return;
         }
         const response = await axios.get(`${import.meta.env.VITE_APP_BASE_URL}user/getProfile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const { success, data } = response.data;
+        console.log("Fetch Profile Response:", response.data); // Debug
         if (success) {
           setProfileData({
-            id: data.id,
-            name: data.name,
-            email: data.email,
-            role: data.role,
-            createdAt: data.createdAt,
-            lastLogin: data.lastLogin,
+            id: data.id || "",
+            name: data.name || "",
+            email: data.email || "",
+            role: data.role || "",
+            createdAt: data.createdAt || "",
+            lastLogin: data.lastLogin || "",
             profilePicture: data.profilePicture || "/professional-avatar.jpg",
           });
           setProfileImage(data.profilePicture || "/professional-avatar.jpg");
+          showToast("Profile fetched successfully");
         } else {
-          showToast("Failed to fetch profile");
+          showToast(response.data.message || "Failed to fetch profile");
         }
       } catch (err) {
-        showToast(err.response?.data?.message || "Failed to fetch profile");
+        console.error("Fetch profile error:", err);
+        showToast(err.response?.data?.message || "Failed to fetch profile. Please try again.");
       }
     };
     fetchProfile();
@@ -82,11 +86,15 @@ const SettingsPage = () => {
     }
     setIsUploading(true);
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        showToast("Authentication token is missing");
+        return;
+      }
       const formData = new FormData();
       formData.append("profilePicture", file);
       formData.append("name", profileData.name);
       formData.append("email", profileData.email);
-      const token = localStorage.getItem("token");
       const response = await axios.put(`${import.meta.env.VITE_APP_BASE_URL}user/me`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -94,15 +102,23 @@ const SettingsPage = () => {
         },
       });
       const { success, message, data } = response.data;
+      console.log("Image Upload Response:", response.data); // Debug
       if (success) {
-        setProfileImage(data.user.profilePicture);
-        setProfileData((prev) => ({ ...prev, profilePicture: data.user.profilePicture }));
-        showToast(message);
+        const newProfilePicture = data.user?.profilePicture || data.profilePicture || "/professional-avatar.jpg";
+        setProfileImage(newProfilePicture);
+        setProfileData((prev) => ({ ...prev, profilePicture: newProfilePicture }));
+        showToast(message || "Profile picture updated successfully");
       } else {
-        showToast(message);
+        showToast(message || "Failed to update profile picture");
       }
     } catch (err) {
-      showToast(err.response?.data?.message || "Failed to upload image");
+      console.error("Image upload error:", err);
+      if (err.response?.status === 401) {
+        showToast("Session expired. Please log in again.");
+        window.location.href = "/login";
+      } else {
+        showToast(err.response?.data?.message || "Failed to upload image. Please try again.");
+      }
     } finally {
       setIsUploading(false);
     }
@@ -113,9 +129,18 @@ const SettingsPage = () => {
       showToast("Name and email are required");
       return;
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(profileData.email)) {
+      showToast("Please enter a valid email address");
+      return;
+    }
     setIsSaving(true);
     try {
       const token = localStorage.getItem("token");
+      if (!token) {
+        showToast("Authentication token is missing");
+        return;
+      }
       const response = await axios.put(
         `${import.meta.env.VITE_APP_BASE_URL}user/me`,
         {
@@ -127,19 +152,26 @@ const SettingsPage = () => {
         }
       );
       const { success, message, data } = response.data;
+      console.log("Save Profile Response:", response.data); // Debug
       if (success) {
         setProfileData((prev) => ({
           ...prev,
-          name: data.user.name,
-          email: data.user.email,
-          profilePicture: data.user.profilePicture,
+          name: data.user?.name || data.name || prev.name,
+          email: data.user?.email || data.email || prev.email,
+          profilePicture: data.user?.profilePicture || data.profilePicture || prev.profilePicture,
         }));
-        showToast(message);
+        showToast(message || "Profile updated successfully");
       } else {
-        showToast(message);
+        showToast(message || "Failed to update profile");
       }
     } catch (err) {
-      showToast(err.response?.data?.message || "Failed to update profile");
+      console.error("Profile update error:", err);
+      if (err.response?.status === 401) {
+        showToast("Session expired. Please log in again.");
+        window.location.href = "/login";
+      } else {
+        showToast(err.response?.data?.message || "Failed to update profile. Please try again.");
+      }
     } finally {
       setIsSaving(false);
     }
@@ -164,6 +196,10 @@ const SettingsPage = () => {
         return;
       }
       const token = localStorage.getItem("token");
+      if (!token) {
+        showToast("Authentication token is missing");
+        return;
+      }
       const response = await axios.put(
         `${import.meta.env.VITE_APP_BASE_URL}user/password`,
         passwordData,
@@ -172,18 +208,25 @@ const SettingsPage = () => {
         }
       );
       const { success, message } = response.data;
+      console.log("Save Password Response:", response.data); // Debug
       if (success) {
-        showToast(message);
+        showToast(message || "Password updated successfully");
         setPasswordData({
           currentPassword: "",
           newPassword: "",
           confirmPassword: "",
         });
       } else {
-        showToast(message);
+        showToast(message || "Failed to update password");
       }
     } catch (err) {
-      showToast(err.response?.data?.message || "Failed to update password");
+      console.error("Password update error:", err);
+      if (err.response?.status === 401) {
+        showToast("Session expired. Please log in again.");
+        window.location.href = "/login";
+      } else {
+        showToast(err.response?.data?.message || "Failed to update password. Please try again.");
+      }
     } finally {
       setIsSaving(false);
     }
@@ -193,6 +236,10 @@ const SettingsPage = () => {
     setIsSaving(true);
     try {
       const token = localStorage.getItem("token");
+      if (!token) {
+        showToast("Authentication token is missing");
+        return;
+      }
       const response = await axios.post(
         `${import.meta.env.VITE_APP_BASE_URL}user/delete/${profileData.id}`,
         {},
@@ -201,17 +248,24 @@ const SettingsPage = () => {
         }
       );
       const { success, message } = response.data;
+      console.log("Delete Account Response:", response.data); // Debug
       if (success) {
-        showToast(message);
+        showToast(message || "Account deleted successfully");
         localStorage.removeItem("token");
         setTimeout(() => {
           window.location.href = "/login";
         }, 2000);
       } else {
-        showToast(message);
+        showToast(message || "Failed to delete account");
       }
     } catch (err) {
-      showToast(err.response?.data?.message || "Failed to delete account");
+      console.error("Delete account error:", err);
+      if (err.response?.status === 401) {
+        showToast("Session expired. Please log in again.");
+        window.location.href = "/login";
+      } else {
+        showToast(err.response?.data?.message || "Failed to delete account. Please try again.");
+      }
     } finally {
       setIsSaving(false);
       setShowDeleteModal(false);
@@ -299,7 +353,7 @@ const SettingsPage = () => {
                 className="w-24 h-24 rounded-full border-2 border-transparent bg-gradient-to-r from-sky-500 to-purple-500 p-0.5"
               >
                 <img
-                  src={profileImage ? `${profileImage}` : "/professional-avatar.jpg"}
+                  src={profileImage}
                   alt="Profile"
                   className="w-full h-full rounded-full object-cover"
                 />
@@ -335,7 +389,7 @@ const SettingsPage = () => {
               <input
                 type="text"
                 value={profileData.name}
-                onChange={(e) => setProfileData({ ...prev, name: e.target.value })}
+                onChange={(e) => setProfileData((prev) => ({ ...prev, name: e.target.value }))}
                 className="cursor-pointer w-full px-4 py-2 bg-slate-700/50 border border-slate-600 rounded-lg text-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all duration-300"
                 placeholder="Enter your full name"
                 aria-required="true"
@@ -348,7 +402,7 @@ const SettingsPage = () => {
                 <input
                   type="email"
                   value={profileData.email}
-                  onChange={(e) => setProfileData({ ...prev, email: e.target.value })}
+                  onChange={(e) => setProfileData((prev) => ({ ...prev, email: e.target.value }))}
                   className="cursor-pointer w-full pl-10 pr-4 py-2 bg-slate-700/50 border border-slate-600 rounded-lg text-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all duration-300"
                   placeholder="Enter your email"
                   aria-required="true"
@@ -547,7 +601,7 @@ const SettingsPage = () => {
             </div>
 
             {/* Danger Zone */}
-            {/* <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
               <h3 className="text-lg font-medium text-red-400 mb-3">Danger Zone</h3>
               <p className="text-slate-400 text-sm mb-4">
                 These actions are irreversible. Please proceed with caution.
@@ -559,7 +613,7 @@ const SettingsPage = () => {
                   className="cursor-pointer w-full sm:w-auto px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white rounded-xl transition-all duration-300 text-sm flex items-center justify-center gap-2"
                   disabled={isSaving}
                 >
-                  <Settings size={16} />
+                  <Settings2 size={16} />
                   <span>Reset All Settings</span>
                 </motion.button>
                 <motion.button
@@ -573,7 +627,7 @@ const SettingsPage = () => {
                   <span>Delete Account</span>
                 </motion.button>
               </div>
-            </div> */}
+            </div>
           </div>
         </motion.div>
       )}
