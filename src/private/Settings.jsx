@@ -66,7 +66,7 @@ const SettingsPage = () => {
             profilePicture: data.profilePicture || "/professional-avatar.jpg",
           });
           setProfileImage(data.profilePicture || "/professional-avatar.jpg");
-          showToast("Profile fetched successfully");
+          // showToast("Profile fetched successfully");
         } else {
           showToast(response.data.message || "Failed to fetch profile");
         }
@@ -104,7 +104,7 @@ const SettingsPage = () => {
       const { success, message, data } = response.data;
       console.log("Image Upload Response:", response.data); // Debug
       if (success) {
-        const newProfilePicture = data.user?.profilePicture || data.profilePicture || "/professional-avatar.jpg";
+        const newProfilePicture = data?.profilePicture || "/professional-avatar.jpg";
         setProfileImage(newProfilePicture);
         setProfileData((prev) => ({ ...prev, profilePicture: newProfilePicture }));
         showToast(message || "Profile picture updated successfully");
@@ -318,11 +318,10 @@ const SettingsPage = () => {
               onClick={() => setActiveTab(tab.id)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className={`cursor-pointer flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
-                activeTab === tab.id
+              className={`cursor-pointer flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${activeTab === tab.id
                   ? "bg-sky-500 text-white shadow-md"
                   : "text-slate-400 hover:text-slate-200 hover:bg-slate-700/50"
-              }`}
+                }`}
               aria-current={activeTab === tab.id ? "page" : undefined}
             >
               <Icon size={20} />
