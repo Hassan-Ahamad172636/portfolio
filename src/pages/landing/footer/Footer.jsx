@@ -100,7 +100,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/50">
           <p>© {new Date().getFullYear()} Hassan Ahmad. All rights reserved.</p>
           <p>
-            Built with <span className="text-white">Next.js</span> &{" "}
+            Built with <span className="text-white">React.js</span> &{" "}
             <span className="text-white">Tailwind CSS</span>
           </p>
         </div>
